@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+        <title>SF Movies and Locations </title>
+    </head>
+ 
+    <body>
+        <h1>Locations in San Francisco !!! </h1>
+
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        
+        <script type="text/javascript">
+            var socket = io.connect('http://localhost:3000');            
+            var movieName = '180';
+            //send Movie name enetered by user
+            socket.emit('Share:MovieName',movieName);
+
+            // receive an array of locations through socket
+            socket.on('Share:Locations',function(data){
+                console.log("Checking locations:: "+ data);
+            });
+
+        </script>
+    </body>
+</html>
