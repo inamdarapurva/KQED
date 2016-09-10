@@ -1,15 +1,20 @@
 var http = require('http');
 var fs = require('fs');
+var url = require('url');
 
 //import external js files
 var db= require('./db_connection.js');
 
 // creating server 
 var server = http.createServer(function(req, res) {
-    fs.readFile('../Front-End/index.html', 'utf-8', function(error, content) {
-        res.writeHead(200, {"Content-Type": "text/html"});
-        res.end(content);
-    });
+    // fs.readFile('../Front-End/index.html', 'utf-8', function(error, content) {
+    //     res.writeHead(200, {"Content-Type": "text/html"});
+    //     res.end(content);
+    // });
+    var requestUrl = url.parse(req.url);    
+    res.writeHead(200);
+   fs.createReadStream(__dirname+'/../Front-End' + requestUrl.pathname).pipe(res);
+   console.log(requestUrl.pathname);
 });
 
 // Loading socket.io - for communicating with front end
