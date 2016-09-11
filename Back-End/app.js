@@ -50,6 +50,51 @@ io.sockets.on('connection', function (socket) {
 		    }
 		});
     });
+
+    
+    //To implement autocomplete - collecting movienames that match the pattern
+    
+    socket.on('Share:EachCharacter',function(character){
+    	
+    	//query string - to populate movienames for pattern enetered by user
+    	//if no.of characters are less than 3 then applying pattern which considers those characters
+    	//as start of moviename
+
+    	
+    	//but if characters are more than 3 it might be a word that appear anywhere in moviename and
+    	//not always at the start.
+    	//so for more than 3 charcters - handling additional pattern for more optimized and accurate results
+
+    	var queryString =' ';
+    	if(character.length >= 3) {
+    		queryString = 'SELECT distinct Title from movielog where Title like "%'+character+'%"';
+    	}
+    	else {
+			queryString = 'SELECT distinct Title from movielog where Title like "'+character+'%"';
+		}
+
+		console.log("query:: "+queryString);
+	 	//executing query
+    	db.query(queryString,function(err, result, fields) {
+		    if (err) throw err;
+		    else {
+		    	var movieList = [];
+		        //console.log('Movie Names for autocomplete are: ');
+		        //console.log('----------------------------------');
+		        for (var i in result) {
+		            var movie = result[i];
+		            //console.log(movie.Title);
+		            movieList.push(movie.Title);
+		        }
+
+		        //sending result of query to populate list of movies for autocomplete
+		        socket.emit('Share:MovieList',movieList);
+		    }
+		}); 
+
+
+    });
+
 });
 
 server.listen(3000);

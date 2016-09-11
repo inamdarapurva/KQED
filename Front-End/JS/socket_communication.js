@@ -23,4 +23,16 @@ socket.on('Share:Locations',function(data){
     
 });
 
-        
+
+//send each character from textbox over socket
+$(document).on('eachCharater:record',function(event,data){
+    socket.emit('Share:EachCharacter',data);
+});   
+
+
+//receive list of movies over socket for autocomplete
+socket.on('Share:MovieList',function(data){
+    console.log("List of Movies:: "+data);
+
+    $(document).trigger('autoCompleteOptions:update',{movies:data});
+});     
