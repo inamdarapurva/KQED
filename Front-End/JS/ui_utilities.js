@@ -17,14 +17,26 @@ $('#movie_text').on('input',function(event){
 	$(document).trigger('eachCharater:record',eachCharater);
 });
 
+var movieArray = []; // array for list of movies
 
 //populating autocomplete options 
 $(document).on('autoCompleteOptions:update',function(event,data){
-  var options = '';
+   
+   	//empty movieArray and add new data 
+   	movieArray.splice(0,movieArray.length);
 
-  for(var i = 0; i < data.movies.length; i++)
-    options += '<option value="'+data.movies[i]+'">';
-
-  document.getElementById('movie_list').innerHTML = options;
+	for(var i =0; i < data.movies.length; i++){
+ 		movieArray.push({value:data.movies[i]});
+	}
+ 
+  	
+  	$('#movie_text').focus();
 
 });
+
+// Jquery- Autocomplete populates list of movies
+$('#movie_text').autocomplete({
+    
+    lookup: movieArray
+});
+
