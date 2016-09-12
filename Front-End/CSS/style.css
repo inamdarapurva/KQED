@@ -1,0 +1,5 @@
+#container  { margin-left:10vw; }
+#movie_text { display:inline; }
+#map_canvas { width: 80vw; height: 80vh;}
+
+label { color: #B4886B; font-size:20px; font-family:'Impact, Charcoal, sans-serif'; margin-left:20vw; }

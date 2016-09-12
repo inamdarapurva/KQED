@@ -11,16 +11,20 @@ $(document).on('movieName',function(event,data){
 
 // receive an array of locations through socket
 socket.on('Share:Locations',function(data){
-    console.log("Checking locations:: "+ data);
-    var locationsArray = [];
-    for(var i in data){
-        var temp = [];
-        temp.push(data[i] + ",San Francisco,CA");
-        locationsArray.push(temp);
+    //console.log("Checking locations:: "+ data);
+    if(data.length > 0) {
+        var locationsArray = [];
+        for(var i in data) {
+            var temp = [];
+            temp.push(data[i] + ",San Francisco,CA");
+            locationsArray.push(temp);
+        }
+        $(document).trigger('locationsArray:update',{locations:locationsArray});
     }
-    
-    $(document).trigger('locationsArray:update',{locations:locationsArray});
-    
+    else{
+        alert("Sorry !! Location does not exists....Please enter another movie!!");
+    }
+
 });
 
 
@@ -32,7 +36,7 @@ $(document).on('eachCharater:record',function(event,data){
 
 //receive list of movies over socket for autocomplete
 socket.on('Share:MovieList',function(data){
-    console.log("List of Movies:: "+data);
+    //console.log("List of Movies:: "+data);
 
     $(document).trigger('autoCompleteOptions:update',{movies:data});
 });     

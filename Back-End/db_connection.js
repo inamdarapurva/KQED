@@ -1,3 +1,5 @@
+/*db_connection.js --- handles databse connection. Set database credentials*/
+
 var mysql      = require('mysql'); //import mysql module to script
 
 //provide hostname , username, password and datbasename

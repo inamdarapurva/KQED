@@ -1,14 +1,5 @@
 /*ui_utilitie.js -- responsible for ui related utilities*/
 
-// get movie name entered by user when user clicks on 'Show Location' 
-$('#show_location').click(function(){
-    
-    var movieName = $('#movie_text').val(); 
-    
-    $(document).trigger('movieName',movieName);
-});
-
-
 //getting each character from textbox to populate autocomplete options
 $('#movie_text').on('input',function(event){
     
@@ -17,7 +8,9 @@ $('#movie_text').on('input',function(event){
 	$(document).trigger('eachCharater:record',eachCharater);
 });
 
+
 var movieArray = []; // array for list of movies
+
 
 //populating autocomplete options 
 $(document).on('autoCompleteOptions:update',function(event,data){
@@ -34,9 +27,13 @@ $(document).on('autoCompleteOptions:update',function(event,data){
 
 });
 
+
 // Jquery- Autocomplete populates list of movies
 $('#movie_text').autocomplete({
-    
-    lookup: movieArray
+    lookup: movieArray,
+    onSelect: function (suggestion) {
+    	var movieName = suggestion.value; 
+        $(document).trigger('movieName',movieName);
+    }
 });
 

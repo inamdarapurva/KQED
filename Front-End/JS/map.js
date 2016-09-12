@@ -66,6 +66,7 @@ function convertAddress(address) {
 function plotLocations(locationsArray) {
     var i;
     if(locationsArray) {
+        clearMarker();
         for(i = 0; i < locationsArray.length; i++) {
             convertAddress(locationsArray[i]);
         }
@@ -75,11 +76,20 @@ function plotLocations(locationsArray) {
     }
 }
 
+//function to clear already existing markers
+function clearMarker(){
+    for(var i=0; i<markersArray.length; i++){
+        markersArray[i].setMap(null);
+    }
+}
+
+
 // Handling of Events
 
 google.maps.event.addDomListener(window, 'load', init);
 
 
 $(document).on('locationsArray:update',function(event,data) {
+   
     plotLocations(data.locations);
 });
