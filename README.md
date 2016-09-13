@@ -11,7 +11,7 @@
   - Import 'Databse/kqed_data.sql' to populate datbase
 4. Change databse credentials username,password in 'Back-End/db_connection.js'.
 
-#How to run an Application:
+#How to run the Application:
 1. To start sever : go to directory where app.js exists
 and run command : node app.js
 2. To load webpage enter url: localhost:3000/index.html
