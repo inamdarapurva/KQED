@@ -9,6 +9,9 @@ var db= require('./db_connection.js');
 var server = http.createServer(function(req, res) {
     var requestUrl = url.parse(req.url);    
     res.writeHead(200);
+    if(requestUrl.pathname == '/') {
+    	requestUrl.pathname = '/index.html';
+    }
    fs.createReadStream(__dirname+'/../Front-End' + requestUrl.pathname).pipe(res);
    //console.log(requestUrl.pathname);
 });
@@ -33,7 +36,7 @@ io.sockets.on('connection', function (socket) {
 		
 		//executing query and displaying deisred results 
 		db.query(queryString,function(err, result, fields) {
-		    if (err) throw err;
+		    if (err) console.err(err);
 		    else {
 		        //console.log('Locations are: ');
 		        //console.log('----------------------------------');
@@ -77,7 +80,7 @@ io.sockets.on('connection', function (socket) {
 
 		//executing query
     	db.query(queryString,function(err, result, fields) {
-		    if (err) throw err;
+		    if (err) console.err(err);
 		    else {
 		    	var movieList = [];
 		        //console.log('Movie Names for autocomplete are: ');
